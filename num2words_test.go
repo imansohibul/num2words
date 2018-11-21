@@ -1,11 +1,9 @@
-package num2words_test
+package num2words
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
-	"num2words"
 )
 
 var tests = []struct {
@@ -106,7 +104,7 @@ func TestConvert(t *testing.T) {
 	t.Parallel()
 	for _, tt := range tests {
 		t.Run("testconvert", func(t *testing.T) {
-			w, err := num2words.Convert(tt.Number)
+			w, err := Convert(tt.Number)
 			assert.Nil(t, err)
 			assert.Equal(t, tt.Words, w)
 		})
@@ -118,7 +116,7 @@ func TestConvertMinus(t *testing.T) {
 	t.Parallel()
 	for _, tt := range tests {
 		t.Run("testconvertminus", func(t *testing.T) {
-			w, err := num2words.Convert(tt.Number * -1)
+			w, err := Convert(tt.Number * -1)
 			assert.Nil(t, err)
 			if tt.Number == 0 {
 				assert.Equal(t, tt.Words, w)
@@ -131,7 +129,7 @@ func TestConvertMinus(t *testing.T) {
 }
 
 func TestConvertError(t *testing.T) {
-	w, err := num2words.Convert(1000000000000000)
+	w, err := Convert(1000000000000000)
 	assert.NotNil(t, err)
 	assert.Equal(t, "", w)
 }
