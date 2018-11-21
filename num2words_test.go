@@ -128,8 +128,8 @@ func TestConvertMinus(t *testing.T) {
 	}
 }
 
-// func TestConvertError(t *testing.T) {
-// 	w, err := Convert(1000000000000000)
-// 	assert.NotNil(t, err)
-// 	assert.Equal(t, "", w)
-// }
+func TestConvertError(t *testing.T) {
+	w, err := Convert(1000000000000000)
+	assert.NotNil(t, err)
+	assert.Equal(t, "", w)
+}
