@@ -2,11 +2,12 @@ package num2words
 
 import (
 	"errors"
-	"strings"
 	"fmt"
+	"strings"
 )
 
-const maxValue= 999999999999999
+const maxValue = 999999999999999
+
 type Words []string
 
 var (
@@ -28,7 +29,7 @@ var (
 
 // Convert converts number into the words representation
 func Convert(number int64) (string, error) {
-	
+
 	if number > maxValue {
 		msg := fmt.Sprintf("input parameters exceed the maximum limit. Max = %d", maxValue)
 		err := errors.New(msg)
@@ -39,13 +40,13 @@ func Convert(number int64) (string, error) {
 
 	if number == 0 {
 		return smallNumbers[number], nil
-	}else if number < 0 {
+	} else if number < 0 {
 		isMinus = true
 		number = number * -1
 	}
 
 	digitGroups := splitIntoThreeDigitGroups(number)
-	
+
 	var groupText []Words
 	for _, digit := range digitGroups {
 		groupText = append(groupText, threeDigitGroupsToWords(digit))
@@ -53,7 +54,7 @@ func Convert(number int64) (string, error) {
 
 	combinedWords := combineWords(groupText)
 	if isMinus {
-		combinedWords = append(Words{"negatif"} ,combinedWords...)
+		combinedWords = append(Words{"negatif"}, combinedWords...)
 	}
 
 	return strings.Join(combinedWords, " "), nil
@@ -68,21 +69,20 @@ func splitIntoThreeDigitGroups(number int64) [5]uint16 {
 	return digitGroups
 }
 
-
 func threeDigitGroupsToWords(number uint16) Words {
 	var words Words
 
-	hundreds  := number / 100
+	hundreds := number / 100
 	tensOfNumbers := number % 100
 	if hundreds != 0 {
-		if hundreds == 1{
+		if hundreds == 1 {
 			words = append(words, "seratus")
-		}else{
+		} else {
 			words = append(words, smallNumbers[hundreds], "ratus")
-		}	
+		}
 	}
 
-	tens :=  tensOfNumbers / 10
+	tens := tensOfNumbers / 10
 	units := tensOfNumbers % 10
 	if tens >= 2 {
 		words = append(words, tensNumber[tens])
@@ -90,25 +90,24 @@ func threeDigitGroupsToWords(number uint16) Words {
 			words = append(words, smallNumbers[units])
 		}
 
-	}else if tensOfNumbers != 0 {
-			words = append(words, smallNumbers[tensOfNumbers])
+	} else if tensOfNumbers != 0 {
+		words = append(words, smallNumbers[tensOfNumbers])
 	}
 
 	return words
 }
 
-func combineWords(groupText	[]Words) Words {
+func combineWords(groupText []Words) Words {
 	var words Words = groupText[0]
-	for i:= 1; i < 5; i++ {
-		if strings.Join(groupText[i],"") != "" {
+	for i := 1; i < 5; i++ {
+		if strings.Join(groupText[i], "") != "" {
 			if strings.Join(groupText[i], "") == "satu" && scales[i] == "ribu" {
 				words = append(Words{"seribu"}, words...)
-			}else{
+			} else {
 				words = append(append(groupText[i], scales[i]), words...)
-			 }	
-		}	
+			}
+		}
 	}
 
 	return words
 }
-

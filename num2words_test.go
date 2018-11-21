@@ -8,9 +8,9 @@ import (
 	"num2words"
 )
 
-var tests = []struct{
+var tests = []struct {
 	Number int64
-	Words	string
+	Words  string
 }{
 	{0, "nol"},
 	{1, "satu"},
@@ -58,7 +58,7 @@ var tests = []struct{
 	{200, "dua ratus"},
 	{267, "dua ratus enam puluh tujuh"},
 	{999, "sembilan ratus sembilan puluh sembilan"},
-	{1000,"seribu"},
+	{1000, "seribu"},
 	{1001, "seribu satu"},
 	{1005, "seribu lima"},
 	{1010, "seribu sepuluh"},
@@ -105,8 +105,8 @@ var tests = []struct{
 func TestConvert(t *testing.T) {
 	t.Parallel()
 	for _, tt := range tests {
-		t.Run("testconvert", func(t *testing.T){
-			w, err :=  num2words.Convert(tt.Number)
+		t.Run("testconvert", func(t *testing.T) {
+			w, err := num2words.Convert(tt.Number)
 			assert.Nil(t, err)
 			assert.Equal(t, tt.Words, w)
 		})
@@ -117,21 +117,21 @@ func TestConvert(t *testing.T) {
 func TestConvertMinus(t *testing.T) {
 	t.Parallel()
 	for _, tt := range tests {
-		t.Run("testconvertminus", func(t *testing.T){
-			w, err :=  num2words.Convert(tt.Number*-1)
+		t.Run("testconvertminus", func(t *testing.T) {
+			w, err := num2words.Convert(tt.Number * -1)
 			assert.Nil(t, err)
 			if tt.Number == 0 {
 				assert.Equal(t, tt.Words, w)
-			}else{
-				assert.Equal(t,"negatif "+tt.Words, w)
+			} else {
+				assert.Equal(t, "negatif "+tt.Words, w)
 			}
-			
+
 		})
 	}
 }
 
 func TestConvertError(t *testing.T) {
-	w, err :=  num2words.Convert(1000000000000000)
+	w, err := num2words.Convert(1000000000000000)
 	assert.NotNil(t, err)
 	assert.Equal(t, "", w)
 }
