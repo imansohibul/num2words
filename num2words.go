@@ -60,10 +60,10 @@ func Convert(number int64) (string, error) {
 	return strings.Join(combinedWords, " "), nil
 }
 
-func splitIntoThreeDigitGroups(number int64) [5]uint16 {
-	var digitGroups [5]uint16
-	for i := 0; i < 5; i++ {
-		digitGroups[i] = uint16(number % 1000)
+func splitIntoThreeDigitGroups(number int64) []uint16 {
+	var digitGroups []uint16
+	for i := 0; i < len(scales); i++ {
+		digitGroups = append(digitGroups,uint16(number % 1000))
 		number = number / 1000
 	}
 	return digitGroups
@@ -99,7 +99,7 @@ func threeDigitGroupsToWords(number uint16) Words {
 
 func combineWords(groupText []Words) Words {
 	var words Words = groupText[0]
-	for i := 1; i < 5; i++ {
+	for i := 1; i < len(scales); i++ {
 		if strings.Join(groupText[i], "") != "" {
 			if strings.Join(groupText[i], "") == "satu" && scales[i] == "ribu" {
 				words = append(Words{"seribu"}, words...)
