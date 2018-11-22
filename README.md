@@ -4,4 +4,4 @@
 
 ## Introduction
 
-***num2words*** is a small module written in pure Go that converts numbers to words in Indonesian.Example : 1267 -> seribu dua ratus enam puluh tujuh
+***num2words*** is a small module written in pure Go that converts numbers to words in Indonesian. Example : 1267 -> seribu dua ratus enam puluh tujuh
