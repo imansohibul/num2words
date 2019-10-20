@@ -131,6 +131,10 @@ func TestConvertError(t *testing.T) {
 	w, err := Convert(1000000000000000)
 	assert.NotNil(t, err)
 	assert.Equal(t, "", w)
+
+	w, err = ConvertDecimal(1000000000000000.0, 1)
+	assert.NotNil(t, err)
+	assert.Equal(t, "", w)
 }
 
 var fractionTest = []struct {
