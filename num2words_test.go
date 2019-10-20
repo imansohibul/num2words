@@ -132,7 +132,7 @@ func TestConvertError(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.Equal(t, "", w)
 
-	w, err = ConvertDecimal(1000000000000000.0, 1)
+	w, err = ConvertDecimal(1000000000000000.1, 1)
 	assert.NotNil(t, err)
 	assert.Equal(t, "", w)
 }
