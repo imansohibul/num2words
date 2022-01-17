@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const maxValue = 999999999999999
+const maxValue = 999999999999999999
 
 type Words []string
 
@@ -23,7 +23,7 @@ var (
 	}
 
 	scales = [...]string{
-		"", "ribu", "juta", "miliar", "triliun",
+		"", "ribu", "juta", "miliar", "triliun", "kuadriliun",
 	}
 )
 
@@ -63,7 +63,7 @@ func Convert(number int64) (string, error) {
 func splitIntoThreeDigitGroups(number int64) []uint16 {
 	var digitGroups []uint16
 	for i := 0; i < len(scales); i++ {
-		digitGroups = append(digitGroups,uint16(number % 1000))
+		digitGroups = append(digitGroups, uint16(number%1000))
 		number = number / 1000
 	}
 	return digitGroups
