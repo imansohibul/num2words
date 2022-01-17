@@ -112,7 +112,6 @@ func TestConvert(t *testing.T) {
 			assert.Equal(t, tt.Words, w)
 		})
 	}
-
 }
 
 func TestConvertMinus(t *testing.T) {
@@ -135,4 +134,44 @@ func TestConvertError(t *testing.T) {
 	w, err := Convert(1000000000000000000)
 	assert.NotNil(t, err)
 	assert.Equal(t, "", w)
+
+	w, err = ConvertDecimal(1000000000000000.1, 1)
+	assert.NotNil(t, err)
+	assert.Equal(t, "", w)
+}
+
+var fractionTest = []struct {
+	Number    float64
+	Precision int
+	Words     string
+}{
+	{0.1, 1, "nol koma satu"},
+	{5.1, 1, "lima koma satu"},
+	{155.25, 1, "seratus lima puluh lima koma dua"},
+	{0.25, 2, "nol koma dua lima"},
+	{0.128, 3, "nol koma satu dua delapan"},
+	{0.128, 4, "nol koma satu dua delapan"},
+	{0.128, 0, "nol"},
+	{0.12345, 5, "nol koma satu dua tiga empat lima"},
+	{23.12345, 5, "dua puluh tiga koma satu dua tiga empat lima"},
+	{1.123456, 6, "satu koma satu dua tiga empat lima enam"},
+	{0.1234563, 6, "nol koma satu dua tiga empat lima enam"},
+	{0.1234563, 7, "nol koma satu dua tiga empat lima enam tiga"},
+	{0.12345639, 8, "nol koma satu dua tiga empat lima enam tiga sembilan"},
+	{0.02345639, 1, "nol"},
+	{0.02345639, 2, "nol koma nol dua"},
+	{0.00000, 5, "nol"},
+	{0.00001, 5, "nol koma nol nol nol nol satu"},
+	{0.10000, 5, "nol koma satu"},
+}
+
+func TestFraction(t *testing.T) {
+	t.Parallel()
+	for _, tt := range fractionTest {
+		t.Run("testconvert", func(t *testing.T) {
+			w, err := ConvertDecimal(tt.Number, tt.Precision)
+			assert.Nil(t, err)
+			assert.Equal(t, tt.Words, w)
+		})
+	}
 }

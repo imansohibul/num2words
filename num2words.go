@@ -27,6 +27,47 @@ var (
 	}
 )
 
+// ConvertDecimal converts decimal number into the words representation
+// reference: https://www.jawapos.com/opini/28/04/2019/membaca-desimal/
+func ConvertDecimal(number float64, precision int) (string, error) {
+	if precision < 1 {
+		return Convert(int64(number))
+	}
+
+	format := "%." + fmt.Sprintf("%d", precision) + "f"
+	fractions := fmt.Sprintf(format, number)
+	fractions = strings.Split(fractions, ".")[1]
+
+	words := ""
+	for precision > 0 {
+		v := fractions[precision-1] - 48
+		if v > 0 {
+			break
+		}
+		precision--
+	}
+
+	fractions = fractions[:precision]
+
+	for i := 1; i <= precision; i++ {
+		v := fractions[precision-i] - 48
+		words = smallNumbers[v] + " " + words
+	}
+
+	if words == "" {
+		return Convert(int64(number))
+	}
+
+	words = words[:len(words)-1]
+
+	numString, err := Convert(int64(number))
+	if err != nil {
+		return "", err
+	}
+
+	return numString + " koma " + words, nil
+}
+
 // Convert converts number into the words representation
 func Convert(number int64) (string, error) {
 
