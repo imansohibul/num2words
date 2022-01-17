@@ -98,6 +98,9 @@ var tests = []struct {
 	{970237255258000, "sembilan ratus tujuh puluh triliun dua ratus tiga puluh tujuh miliar dua ratus lima puluh lima juta dua ratus lima puluh delapan ribu"},
 	{970237255295800, "sembilan ratus tujuh puluh triliun dua ratus tiga puluh tujuh miliar dua ratus lima puluh lima juta dua ratus sembilan puluh lima ribu delapan ratus"},
 	{970237255295823, "sembilan ratus tujuh puluh triliun dua ratus tiga puluh tujuh miliar dua ratus lima puluh lima juta dua ratus sembilan puluh lima ribu delapan ratus dua puluh tiga"},
+	{1000000000000000, "satu kuadriliun"},
+	{12970237255295823, "dua belas kuadriliun sembilan ratus tujuh puluh triliun dua ratus tiga puluh tujuh miliar dua ratus lima puluh lima juta dua ratus sembilan puluh lima ribu delapan ratus dua puluh tiga"},
+	{312970237255295823, "tiga ratus dua belas kuadriliun sembilan ratus tujuh puluh triliun dua ratus tiga puluh tujuh miliar dua ratus lima puluh lima juta dua ratus sembilan puluh lima ribu delapan ratus dua puluh tiga"},
 }
 
 func TestConvert(t *testing.T) {
@@ -129,7 +132,7 @@ func TestConvertMinus(t *testing.T) {
 }
 
 func TestConvertError(t *testing.T) {
-	w, err := Convert(1000000000000000)
+	w, err := Convert(1000000000000000000)
 	assert.NotNil(t, err)
 	assert.Equal(t, "", w)
 }
